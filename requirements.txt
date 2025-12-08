@@ -1,0 +1,11 @@
+# usar o código abaixo para baixar tudo que for preciso
+# pip install -r requirements.txt
+# rodar sempre com:
+# python -m streamlit run main.py
+
+streamlit
+pandas
+numpy
+plotly
+folium
+streamlit-folium
