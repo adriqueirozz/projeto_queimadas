@@ -57,19 +57,47 @@ Todos os dados são carregados automaticamente da pasta `/data/`.
 
 ---
 
+# 3. Análises Desmatamento × Queimadas
+
+Página dedicada à análise da relação entre desmatamento e queimadas, explorando o ciclo do desmatamento e fogo.
+
+Os dados incluem:
+
+- Área desmatada por município e ano (dados INPE)
+- Focos de calor de queimadas
+
+### Integração automática dos datasets
+Os arquivos **inpe_desmatamento_filtrado.csv** e **dataset_queimadas_definitivo.csv** são carregados da pasta `/data/`.
+
+### Cruzamento Desmatamento × Queimadas
+Dados combinados pelos campos:
+- ano
+- id_municipio
+
+### Visualizações incluídas
+- Gráfico de dispersão com correlação Pearson
+- Evolução temporal com eixos duplos (desmatamento e focos de calor)
+- Ranking top 10 municípios com comparativo logarítmico
+
+Essas análises permitem investigar a relação entre desmatamento e ocorrência de queimadas.
+
+---
+
 # Estrutura do Projeto
 
 ```bash
-dashboard_queimadas/
+projeto_queimadas/
 │
 ├── main.py
 │
 ├── pages/
 │ ├── 1_Análise_SNIS.py
-│ └── 2_Análise_Queimadas_Geral.py
+│ ├── 2_Análise_Queimadas_Geral.py
+│ └── 3_Análise_Desmatamento.py
 │
 ├── data/
 │ ├── dataset_queimadas_definitivo.csv
+│ ├── inpe_desmatamento_filtrado.csv
 │ └── snis_filtrado.csv
 │
 ├── requirements.txt
@@ -124,3 +152,13 @@ statsmodels
 - Heatmap nacional
 - Indicadores ambientais modernos
 - Painel totalmente interativo
+
+### Página 3 — Análises Desmatamento × Queimadas
+
+- Merge automático dos datasets de desmatamento e queimadas
+- Filtros por bioma e ano
+- Correlação Pearson em tempo real
+- Gráfico de dispersão com linha de tendência OLS
+- Evolução temporal com eixos duplos
+- Ranking top 10 municípios
+- Painel interativo para exploração do ciclo desmatamento-fogo

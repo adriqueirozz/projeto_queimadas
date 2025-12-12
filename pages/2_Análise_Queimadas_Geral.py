@@ -6,26 +6,28 @@ from folium.plugins import HeatMap
 from streamlit_folium import st_folium
 
 st.title("Análises Gerais das Queimadas")
-
 df = df = pd.read_csv("data/dataset_queimadas_definitivo.csv")
 
 # ================================
 # FILTROS
 # ================================
+
+st.sidebar.header("Filtros de Análise")
+
 anos = st.sidebar.multiselect(
-    "Anos",
+    "Selecione os anos",
     sorted(df["ano"].unique()),
     default=sorted(df["ano"].unique())
 )
 
 estados = st.sidebar.multiselect(
-    "Estados",
+    "Selecione os estados",
     sorted(df["sigla_uf"].unique()),
     default=sorted(df["sigla_uf"].unique())
 )
 
 meses = st.sidebar.multiselect(
-    "Meses",
+    "Selecione os meses",
     sorted(df["mes"].unique()),
     default=sorted(df["mes"].unique())
 )
