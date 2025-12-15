@@ -159,7 +159,7 @@ fig_dual.update_layout(
 st.plotly_chart(fig_dual, use_container_width=True)
 
 # GRÁFICO 3: RANKING
-st.subheader("3. Top 10 Municípios: Comparativo (Logarítmico)")
+st.subheader("3. Top 10 Municípios: Comparativo")
 
 # Agrupar por município e ordenar os 10 maiores
 df_rank = df_filtrado.groupby(['id_municipio', 'sigla_uf'])[['desmatado', 'total_focos_calor']].sum().reset_index()
@@ -212,3 +212,35 @@ fig_bar.update_layout(
 )
 
 st.plotly_chart(fig_bar, use_container_width=True)
+
+# GRÁFICO 4: EVOLUÇÃO DA CORRELAÇÃO
+st.divider()
+st.subheader("4. Evolução da Correlação")
+st.markdown("Este gráfico mostra o cálculo da Correlação de Pearson ano a ano.")
+
+# Cálculo da correlação agrupada por ano
+correlacao_por_ano = df_filtrado.groupby('ano').apply(
+    lambda x: x['desmatado'].corr(x['total_focos_calor']) if len(x) > 1 else None
+).reset_index(name='correlacao')
+
+# Remover anos sem correlação calculada
+correlacao_por_ano = correlacao_por_ano.dropna()
+
+if not correlacao_por_ano.empty:
+    fig_corr_time = px.line(
+        correlacao_por_ano, 
+        x='ano', 
+        y='correlacao',
+        markers=True,
+        title="Força da Correlação (Pearson) ao Longo dos Anos",
+        labels={'correlacao': 'Índice de Correlação', 'ano': 'Ano'}
+    )
+    
+    # Adicionar uma linha de referência em 0 (sem correlação) e 1 (perfeita)
+    fig_corr_time.add_hline(y=0, line_dash="dash", line_color="gray", annotation_text="Sem Correlação")
+    fig_corr_time.add_hline(y=1, line_dash="dot", line_color="green", annotation_text="Correlação Perfeita")
+    
+    # Ajustar eixo Y para focar entre -1 e 1
+    fig_corr_time.update_yaxes(range=[-0.2, 1.1])
+    
+    st.plotly_chart(fig_corr_time, use_container_width=True)
